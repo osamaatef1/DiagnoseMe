@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 class ConditionController extends Controller
 {
     use Responser;
+    public function __construct(){
+        $this->middleware('admin')->only('store');
+    }
+
+
     public function index(){
         $conditions = Condition::all();
         return response($conditions);

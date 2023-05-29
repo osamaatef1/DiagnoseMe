@@ -29,19 +29,19 @@ Route::group(['prefix' =>'user'], function() {
     Route::post('login',[AuthController::class,'login']);
     Route::post('logout',[AuthController::class,'logout']);
 });
-Route::controller(DoctorsController::class)->middleware('auth:api')->prefix('doctor')->group(function (){
-    Route::post('store', 'store');
+Route::controller(DoctorsController::class)->prefix('doctor')->group(function (){
+    Route::post('store', 'store')->middleware('auth:api');
     Route::get('/', 'index');
-    Route::delete('/{id}', 'delete');
+    Route::delete('/{id}', 'delete')->middleware('auth:api');
 });
 
 Route::controller(SymptomController::class)->middleware(['auth:api'])->prefix('symptoms')->group(function (){
     Route::get('/' , 'index');
     Route::post('/' , 'store');
 });
-Route::controller(ConditionController::class)->middleware(['auth:api'])->prefix('condition')->group(function (){
+Route::controller(ConditionController::class)->prefix('condition')->group(function (){
     Route::get('/','index');
-    Route::post('/','store');
+    Route::post('/','store')->middleware(['auth:api']);
 });
 Route::controller(\App\Http\Controllers\ConditionsToSymptoms::class)->middleware('auth:api')->prefix('conditionsToSymptoms')->group(function (){
     Route::post('/','AssignSymptomsToConditions');
