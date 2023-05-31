@@ -43,6 +43,7 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         try {
+
             $user = User::create([
                 'first_name' => $request['first_name'],
                 'last_name' => $request['last_name'],
@@ -54,7 +55,9 @@ class AuthController extends Controller
             ]);
 //            $credentials = $request->only('email', 'password');
 //            Auth::guard('api')->attempt($credentials);
-            return $this->responseSuccess('User Registerd', $user);
+            $credentials = request(['email', 'password']);
+            $token = \auth()->guard('api')->attempt($credentials);
+            return $this->responseSuccess('User Registerd', [$user,'token'=>$token]);
         }
         catch
             (\Exception $e){
