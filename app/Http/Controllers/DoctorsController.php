@@ -15,14 +15,11 @@ class DoctorsController extends Controller
     use Responser;
     public function index()
     {
-        $doctors =  Doctor::all();
+      //  $doctors =  Doctor::all();
+        $doctors =  Doctor::query()->paginate(10);
         return response($doctors);
     }
 
-    public function create()
-    {
-        return view('admin.doctors.create');
-    }
 
     public function store(AddDoctorRequest $request)
     {

@@ -30,7 +30,7 @@ Route::group(['prefix' =>'user'], function() {
     Route::post('logout',[AuthController::class,'logout']);
 });
 Route::controller(DoctorsController::class)->prefix('doctor')->group(function (){
-    Route::post('store', 'store')->middleware('auth:api');
+    Route::post('store', 'store')->middleware(['auth:api','admin']);
     Route::get('/', 'index');
     Route::delete('/{id}', 'delete')->middleware('auth:api');
 });
