@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AddDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
 use App\Models\Doctor;
+use App\Traits\ImageUploader;
 use App\Traits\Responser;
 use Illuminate\Http\Request;
 use mysql_xdevapi\Exception;
 
 class DoctorsController extends Controller
 {
+    use ImageUploader;
     use Responser;
     public function index()
     {
@@ -19,6 +21,11 @@ class DoctorsController extends Controller
         $doctors =  Doctor::query()->paginate(10);
         return response($doctors);
     }
+    public function oneitem($id){
+       $Doctor = Doctor::find($id);
+       return response($Doctor);
+    }
+
 
 
     public function store(AddDoctorRequest $request)
@@ -31,12 +38,16 @@ class DoctorsController extends Controller
                 'PhoneNumber' => $request['PhoneNumber'],
 
             ]);
-          //  return to_route('doctors.index')->with('message', "Doctor Added!");
+            if ($request->has('image')){
+                $this->uploadImage($request,'doctors',$doctor,'image');
+            }
+
             return response()->json($doctor);
 
         } catch (\Exception $e) {
-            return back()->with('error', "Something Went Wrong");
-           // return $e;
+            return $this->responseFailed("Something Went Wrong",$e);
+        //    return back()->with('error', "Something Went Wrong");
+            return $e;
         }
     }
 
@@ -73,4 +84,5 @@ class DoctorsController extends Controller
     return $this->responseFailed('Failed' , $e);
         }
     }
+
 }

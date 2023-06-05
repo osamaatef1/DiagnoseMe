@@ -32,6 +32,7 @@ Route::group(['prefix' =>'user'], function() {
 Route::controller(DoctorsController::class)->prefix('doctor')->group(function (){
     Route::post('store', 'store')->middleware(['auth:api','admin']);
     Route::get('/', 'index');
+    Route::get('/{id}', 'oneitem');
     Route::delete('/{id}', 'delete')->middleware('auth:api');
 });
 
@@ -41,6 +42,7 @@ Route::controller(SymptomController::class)->middleware(['auth:api'])->prefix('s
 });
 Route::controller(ConditionController::class)->prefix('condition')->group(function (){
     Route::get('/','index');
+    Route::get('/{id}','oneCondition');
     Route::post('/','store')->middleware(['auth:api']);
 });
 Route::controller(\App\Http\Controllers\ConditionsToSymptoms::class)->middleware('auth:api')->prefix('conditionsToSymptoms')->group(function (){

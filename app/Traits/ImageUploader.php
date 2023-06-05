@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use http\Env\Request;
+
 trait ImageUploader
 {
 
@@ -11,5 +13,15 @@ trait ImageUploader
         $image->move(storage_path("app/public/" . $placeMove) , $img);
         $model->update([$attribute => $placeMove . $img]);
     }
+       public function uploadimg(\Illuminate\Support\Facades\Request $request){
+        $image = $request->file('image')->getClientOriginalExtension();
+        $path = $request->file("image")->storeAs('users',$image,'');
 
+    }
+   public function TesT($request , $placemove ,$attribute ,$key = 'image'){
+        $image = $request->file($key);
+        $img = time() . rand(1000 , 200000) . '.' . $image->getClientOriginalExtension();
+        $image->move(storage_path('app/public/' . $placemove),$img);
+        $model = update([$attribute => $placemove . $img]);
+   }
 }

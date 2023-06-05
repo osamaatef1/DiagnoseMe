@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('address');
             $table->text('info');
             $table->integer('PhoneNumber');
+            $table->string('image')->default(0);
            // $table->foreignId('category_id')->references('id')->on('categories')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });

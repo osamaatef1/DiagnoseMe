@@ -16,8 +16,12 @@ class ConditionController extends Controller
 
 
     public function index(){
-        $conditions = Condition::all();
+        $conditions = Condition::query()->paginate(10);
         return response($conditions);
+    }
+    public function oneCondition($id){
+        $condition = Condition::find($id);
+        return response($condition);
     }
     public function store(Request $request){
         $this->middleware('admin');
