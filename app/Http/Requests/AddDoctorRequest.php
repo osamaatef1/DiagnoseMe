@@ -26,6 +26,7 @@ class AddDoctorRequest extends FormRequest
         return [
             'name' => 'required|max:255',
             'address'=>'required|max:255',
+            'Specialization'=>'required|max:255',
             'info'=>'required',
             'PhoneNumber'=>'required|max:15'
         ];

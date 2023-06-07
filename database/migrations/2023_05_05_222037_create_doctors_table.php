@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('address');
+            $table->string('Specialization');
             $table->text('info');
             $table->integer('PhoneNumber');
             $table->string('image')->default(0);
