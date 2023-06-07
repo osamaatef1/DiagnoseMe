@@ -18,10 +18,5 @@ trait ImageUploader
         $path = $request->file("image")->storeAs('users',$image,'');
 
     }
-   public function TesT($request , $placemove ,$attribute ,$key = 'image'){
-        $image = $request->file($key);
-        $img = time() . rand(1000 , 200000) . '.' . $image->getClientOriginalExtension();
-        $image->move(storage_path('app/public/' . $placemove),$img);
-        $model = update([$attribute => $placemove . $img]);
-   }
+
 }

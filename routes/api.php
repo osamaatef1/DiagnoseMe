@@ -33,7 +33,7 @@ Route::controller(DoctorsController::class)->prefix('doctor')->group(function ()
     Route::post('store', 'store')->middleware(['auth:api','admin']);
     Route::get('/', 'index');
     Route::get('/{id}', 'oneitem');
-    Route::delete('/{id}', 'delete')->middleware('auth:api');
+    Route::delete('/{id}', 'delete')->middleware('auth:api' , 'admin');
 });
 
 Route::controller(SymptomController::class)->middleware(['auth:api'])->prefix('symptoms')->group(function (){
@@ -49,5 +49,15 @@ Route::controller(\App\Http\Controllers\ConditionsToSymptoms::class)->middleware
     Route::post('/','AssignSymptomsToConditions');
 });
 
+Route::controller(\App\Http\Controllers\NewsController::class)->middleware('auth:api')->prefix('news')->group(function (){
+   Route::get('/' , 'index');
+   Route::get('/{id}' , 'selectOne');
+   Route::post('/' , 'AddNews')->middleware('admin');
+});
+
+Route::controller(\App\Http\Controllers\ServicesController::class)->middleware('auth:api')->prefix('services')->group(function (){
+    Route::get('/' , 'index');
+    Route::post('/','store');
+});
 
 

@@ -47,7 +47,7 @@ class DoctorsController extends Controller
         } catch (\Exception $e) {
             return $this->responseFailed("Something Went Wrong",$e);
         //    return back()->with('error', "Something Went Wrong");
-            return $e;
+
         }
     }
 
