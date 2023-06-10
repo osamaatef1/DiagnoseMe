@@ -34,4 +34,17 @@ class ServicesController extends Controller
 
         }
     }
+
+    public function delete($id)
+    {
+        try {
+            Service::find($id)->delete();
+            //
+            return \response()->json(['Message' => 'deleted', 'status' => '200']);
+        } catch (\Exception $e) {
+            //  return back()->with('error' , "Something Went Wrong");
+            return $this->responseFailed('Failed', $e);
+        }
+    }
+
 }

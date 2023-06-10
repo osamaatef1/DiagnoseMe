@@ -43,21 +43,25 @@ Route::controller(SymptomController::class)->middleware(['auth:api'])->prefix('s
 Route::controller(ConditionController::class)->prefix('condition')->group(function (){
     Route::get('/','index');
     Route::get('/{id}','oneCondition');
-    Route::post('/','store')->middleware(['auth:api']);
+    Route::post('/','store')->middleware(['auth:api','admin']);
 });
 Route::controller(\App\Http\Controllers\ConditionsToSymptoms::class)->middleware('auth:api')->prefix('conditionsToSymptoms')->group(function (){
     Route::post('/','AssignSymptomsToConditions');
 });
 
-Route::controller(\App\Http\Controllers\NewsController::class)->middleware('auth:api')->prefix('news')->group(function (){
+Route::controller(\App\Http\Controllers\NewsController::class)->prefix('news')->group(function (){
    Route::get('/' , 'index');
    Route::get('/{id}' , 'selectOne');
-   Route::post('/' , 'AddNews')->middleware('admin');
+   Route::post('/' , 'AddNews')->middleware('auth:api','admin');
+    Route::delete('/{id}', 'delete')->middleware('auth:api' , 'admin');
+
 });
 
-Route::controller(\App\Http\Controllers\ServicesController::class)->middleware('auth:api')->prefix('services')->group(function (){
+Route::controller(\App\Http\Controllers\ServicesController::class)->prefix('services')->group(function (){
     Route::get('/' , 'index');
-    Route::post('/','store');
+    Route::post('/','store')->middleware('auth:api','admin');
+    Route::delete('/{id}', 'delete')->middleware('auth:api' , 'admin');
+
 });
 
 

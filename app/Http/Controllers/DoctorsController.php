@@ -78,7 +78,6 @@ class DoctorsController extends Controller
         try {
             Doctor::find($id)->delete();
            //
-            // return to_route('doctors.index')->with('message' , "Doctor Deleted !");
             return \response()->json(['Message'=>'deleted' , 'status'=>'200']);
         }catch (\Exception $e){
           //  return back()->with('error' , "Something Went Wrong");

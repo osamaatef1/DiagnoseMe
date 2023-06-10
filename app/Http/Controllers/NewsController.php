@@ -41,5 +41,20 @@ class NewsController extends Controller
              return $this->responseFailed('Something went wrong' , $e);
 
         }
+
     }
+
+
+    public function delete($id)
+    {
+        try {
+            News::find($id)->delete();
+            //
+            return \response()->json(['Message' => 'deleted', 'status' => '200']);
+        } catch (\Exception $e) {
+            return $this->responseFailed('Failed', $e);
+        }
+    }
+
+
 }
