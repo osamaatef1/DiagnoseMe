@@ -16,7 +16,7 @@ class NewsController extends Controller
 
 
     public function index(){
-        $News = News::all();
+        $News = News::query()->paginate(10);
         return ($News);
     }
     public function selectOne($id){

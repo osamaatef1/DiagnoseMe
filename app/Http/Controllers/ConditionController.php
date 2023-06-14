@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Condition;
+use App\Models\Service;
 use App\Traits\Responser;
 use Illuminate\Http\Request;
 
@@ -39,6 +40,15 @@ class ConditionController extends Controller
 
         } catch (\Exception $e) {
             return $this->responseFailed("Failed", $e);
+        }
+    }
+    public function delete($id){
+        try {
+            Service::find($id)->delete();
+
+            return \response()->json(['Message'=>'deleted' , 'status'=>'200']);
+        }catch (\Exception $e){
+            return $this->responseFailed('Failed' , $e);
         }
     }
 }

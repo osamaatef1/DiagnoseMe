@@ -13,7 +13,7 @@ class ServicesController extends Controller
     use ImageUploader;
     use Responser;
     public function index(){
-        $servicrs = Service::all();
+        $servicrs = Service::query()->paginate(10);
         return response()->json($servicrs);
     }
     public function store(AddServiceRequest $request){

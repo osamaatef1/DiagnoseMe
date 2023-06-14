@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('password');
             $table->text('phone_number');
             $table->tinyInteger('role')->default(0)->nullable();
+            $table->tinyInteger('premium')->default(0)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

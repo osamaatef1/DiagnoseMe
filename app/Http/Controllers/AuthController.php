@@ -52,6 +52,7 @@ class AuthController extends Controller
                 'password' => Hash::make($request['password']),
                 'phone_number' => $request['phone_number'],
                 'role'=>$request['role'],
+                'premium'=>$request['premium'],
             ]);
 //            $credentials = $request->only('email', 'password');
 //            Auth::guard('api')->attempt($credentials);
@@ -61,9 +62,9 @@ class AuthController extends Controller
         }
         catch
             (\Exception $e){
-                return $this->responseFailed("Failed", $e);
+             //   return $this->responseFailed("Failed", $e);
 
-
+    return $e;
             }
 
 

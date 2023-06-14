@@ -63,5 +63,8 @@ Route::controller(\App\Http\Controllers\ServicesController::class)->prefix('serv
     Route::delete('/{id}', 'delete')->middleware('auth:api' , 'admin');
 
 });
+Route::controller(\App\Http\Controllers\ScheduleController::class)->prefix('schedule')->group(function (){
+    Route::get('/' , 'index');
+    Route::post('/','store')->middleware('auth:api', 'premium');
 
-
+});
