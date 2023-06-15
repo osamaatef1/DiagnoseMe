@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
+use App\Http\Resources\ScheduleResource;
 use App\Models\Doctor;
 use App\Traits\ImageUploader;
 use App\Traits\Responser;
@@ -83,6 +84,11 @@ class DoctorsController extends Controller
           //  return back()->with('error' , "Something Went Wrong");
     return $this->responseFailed('Failed' , $e);
         }
+    }
+
+    public function schedules(){
+        $schedules = auth('doctors')->user()->schedules;
+        return $this->responseSuccess('Successfully Done' , ScheduleResource::collection($schedules));
     }
 
 }

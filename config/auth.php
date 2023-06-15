@@ -48,10 +48,15 @@ return [
 //            'driver' => 'session',
 //            'provider' => 'users',
 //        ],
+
         'api' => [
             'driver' => 'jwt',
             'provider' => 'users',
         ],
+        'doctors'=>[
+            'driver' => 'jwt',
+            'provider' => 'doctors',
+        ]
     ],
 
     /*
@@ -77,10 +82,16 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
         ],
+
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+
+        'doctors'=>[
+            'driver' => 'eloquent',
+            'model' => App\Models\Doctor::class,
+        ]
 
 
         // 'users' => [

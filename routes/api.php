@@ -2,7 +2,11 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConditionController;
+use App\Http\Controllers\ConditionsToSymptoms;
 use App\Http\Controllers\DoctorsController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\SymptomController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,11 +33,18 @@ Route::group(['prefix' =>'user'], function() {
     Route::post('login',[AuthController::class,'login']);
     Route::post('logout',[AuthController::class,'logout']);
 });
+
 Route::controller(DoctorsController::class)->prefix('doctor')->group(function (){
     Route::post('store', 'store')->middleware(['auth:api','admin']);
     Route::get('/', 'index');
     Route::get('/{id}', 'oneitem');
     Route::delete('/{id}', 'delete')->middleware('auth:api' , 'admin');
+});
+
+Route::get('mySchedules' , [DoctorsController::class , 'schedules'])->middleware('auth:doctors');
+Route::controller(AuthController::class)->prefix('doctor')->group(function () {
+    Route::post('login' , 'loginDoctors');
+    Route::post('register','registerDoctor');
 });
 
 Route::controller(SymptomController::class)->middleware(['auth:api'])->prefix('symptoms')->group(function (){
@@ -45,11 +56,11 @@ Route::controller(ConditionController::class)->prefix('condition')->group(functi
     Route::get('/{id}','oneCondition');
     Route::post('/','store')->middleware(['auth:api','admin']);
 });
-Route::controller(\App\Http\Controllers\ConditionsToSymptoms::class)->middleware('auth:api')->prefix('conditionsToSymptoms')->group(function (){
+Route::controller(ConditionsToSymptoms::class)->middleware('auth:api')->prefix('conditionsToSymptoms')->group(function (){
     Route::post('/','AssignSymptomsToConditions');
 });
 
-Route::controller(\App\Http\Controllers\NewsController::class)->prefix('news')->group(function (){
+Route::controller(NewsController::class)->prefix('news')->group(function (){
    Route::get('/' , 'index');
    Route::get('/{id}' , 'selectOne');
    Route::post('/' , 'AddNews')->middleware('auth:api','admin');
@@ -57,13 +68,13 @@ Route::controller(\App\Http\Controllers\NewsController::class)->prefix('news')->
 
 });
 
-Route::controller(\App\Http\Controllers\ServicesController::class)->prefix('services')->group(function (){
+Route::controller(ServicesController::class)->prefix('services')->group(function (){
     Route::get('/' , 'index');
     Route::post('/','store')->middleware('auth:api','admin');
     Route::delete('/{id}', 'delete')->middleware('auth:api' , 'admin');
 
 });
-Route::controller(\App\Http\Controllers\ScheduleController::class)->prefix('schedule')->group(function (){
+Route::controller(ScheduleController::class)->prefix('schedule')->group(function (){
     Route::get('/' , 'index');
     Route::post('/','store')->middleware('auth:api', 'premium');
 

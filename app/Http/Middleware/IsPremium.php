@@ -18,7 +18,7 @@ class IsPremium
             return $next($request);
         }
 
-        return 'unauth';
+        return $this->responseFailed('Sorry, You Are Not Allowed ',[] );
     }
 
 }

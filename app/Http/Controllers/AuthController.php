@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\DoctorRegisterRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\RegisterRequestApi;
+use App\Http\Resources\DoctorResource;
 use App\Http\Resources\UserResourse;
+use App\Models\Doctor;
 use App\Models\User;
 use App\Models\Users;
 use App\Traits\Responser;
@@ -30,6 +33,7 @@ class AuthController extends Controller
         if (!$token) {
             return $this->responseFailed("UnAuthorized" , null);
         }
+
         $user = auth()->guard('api')->user();
 
         return $this->responseSuccess("Logged In Successfully" , [
@@ -37,6 +41,23 @@ class AuthController extends Controller
             'token' => $token,
         ]);
     }
+    public function loginDoctor()
+    {
+        $credentials = request(['email', 'password']);
+        $token = \auth()->guard('doctors')->attempt($credentials);
+        if (!$token) {
+            return $this->responseFailed("UnAuthorized" , null);
+        }
+
+        $doctor = auth()->guard('doctors')->user();
+
+        return $this->responseSuccess("Logged In Successfully" , [
+            'user' => new DoctorResource($doctor),
+            'token' => $token,
+        ]);
+    }
+
+
 
       //*********************************************Register**************************************************??//
 
@@ -53,9 +74,9 @@ class AuthController extends Controller
                 'phone_number' => $request['phone_number'],
                 'role'=>$request['role'],
                 'premium'=>$request['premium'],
+                'specialization'=>$request['specialization'],
             ]);
-//            $credentials = $request->only('email', 'password');
-//            Auth::guard('api')->attempt($credentials);
+
             $credentials = request(['email', 'password']);
             $token = \auth()->guard('api')->attempt($credentials);
             return $this->responseSuccess('User Registerd', [$user,'token'=>$token]);
@@ -70,6 +91,37 @@ class AuthController extends Controller
 
 
         }
+    public function registerDoctor(DoctorRegisterRequest $request)
+    {
+        try {
+            $doctor = Doctor::create([
+                'first_name' => $request['first_name'],
+                'last_name' => $request['last_name'],
+                'username' => $request['username'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password']),
+                'phone_number' => $request['phone_number'],
+                'role'=>$request['role'],
+                'specialization'=>$request['specialization'],
+            ]);
+
+            $credentials = request(['email', 'password']);
+            $token = \auth()->guard( 'doctors')->attempt($credentials);
+            return $this->responseSuccess('Doctor Registered', [
+                DoctorResource::make($doctor),
+                'token'=>$token]);
+        }
+
+        catch
+        (\Exception $e){
+              return $this->responseFailed("Failed", $e);
+
+
+        }
+
+
+
+    }
 
             //*******************************************LOG OUT********************************************//
     public function logout()

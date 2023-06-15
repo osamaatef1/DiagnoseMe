@@ -23,6 +23,9 @@ return new class extends Migration
             $table->text('phone_number');
             $table->tinyInteger('role')->default(0)->nullable();
             $table->tinyInteger('premium')->default(0)->nullable();
+            $table->string('ReservedDate')->nullable();
+            $table->string('DisabledDate')->nullable();
+            $table->string('specialization')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

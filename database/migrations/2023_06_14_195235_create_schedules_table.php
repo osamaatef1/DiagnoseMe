@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('doctor_id')->nullable()->constrained('doctors')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('date');
-            $table->string('time');
-            $table->string('status')->nullable();
+            $table->date('date');
+            $table->time('time');
+            $table->enum('status' , ['RESERVED' , 'COMPLETED'])->default('RESERVED');
             $table->timestamps();
         });
     }
