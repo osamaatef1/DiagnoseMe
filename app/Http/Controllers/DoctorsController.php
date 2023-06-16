@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
+use App\Http\Resources\AvailableDaysResource;
 use App\Http\Resources\ScheduleResource;
 use App\Models\Doctor;
 use App\Traits\ImageUploader;
@@ -91,4 +92,18 @@ class DoctorsController extends Controller
         return $this->responseSuccess('Successfully Done' , ScheduleResource::collection($schedules));
     }
 
+    public function AvailableDays(Request $request ){
+        try{
+        $doctor = auth('doctors')->user();
+        $doctor->update([
+            'AvailableDays'=>$request['AvailableDays'],
+
+        ]);
+        return $this->responseSuccess('Available days Added!' , $doctor->AvailableDays);
+
+        }catch(\Exception $e){
+            return $this->responseFailed('Error' , $e->getMessage());
+
+            }
+    }
 }

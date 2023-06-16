@@ -12,6 +12,7 @@ use App\Http\Resources\UserResourse;
 use App\Models\Doctor;
 use App\Models\User;
 use App\Models\Users;
+use App\Traits\ImageUploader;
 use App\Traits\Responser;
 use http\Exception;
 use Illuminate\Http\Request;
@@ -26,6 +27,7 @@ class AuthController extends Controller
 {
 
     use Responser;
+    use ImageUploader;
     public function login()
     {
         $credentials = request(['email', 'password']);
@@ -74,7 +76,6 @@ class AuthController extends Controller
                 'phone_number' => $request['phone_number'],
                 'role'=>$request['role'],
                 'premium'=>$request['premium'],
-                'specialization'=>$request['specialization'],
             ]);
 
             $credentials = request(['email', 'password']);
@@ -83,9 +84,8 @@ class AuthController extends Controller
         }
         catch
             (\Exception $e){
-             //   return $this->responseFailed("Failed", $e);
+              return $this->responseFailed("Failed", $e);
 
-    return $e;
             }
 
 
@@ -107,6 +107,11 @@ class AuthController extends Controller
 
             $credentials = request(['email', 'password']);
             $token = \auth()->guard( 'doctors')->attempt($credentials);
+
+            if ($request->has('image')){
+                $this->uploadImage($request,'doctors',$doctor,'image');
+            }
+
             return $this->responseSuccess('Doctor Registered', [
                 DoctorResource::make($doctor),
                 'token'=>$token]);
@@ -114,7 +119,7 @@ class AuthController extends Controller
 
         catch
         (\Exception $e){
-              return $this->responseFailed("Failed", $e);
+              return $this->responseFailed("Failed", $e->getMessage());
 
 
         }

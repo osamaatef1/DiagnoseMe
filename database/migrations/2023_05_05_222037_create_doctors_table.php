@@ -23,7 +23,7 @@ return new class extends Migration
             $table->text('phone_number');
             $table->tinyInteger('role')->default(2)->nullable();
             $table->string('ReservedDate')->nullable();
-            $table->string('DisabledDate')->nullable();
+            $table->string('AvailableDays')->nullable();
             $table->string('specialization')->nullable();
             $table->string('image')->default(0);
            // $table->foreignId('category_id')->references('id')->on('categories')->cascadeOnUpdate()->cascadeOnDelete();

@@ -12,7 +12,7 @@ class IsDoctor
 
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::guard('api')->user()->role == 1) {
+        if (Auth::guard('api')->user()->role == 2) {
             return $next($request);
         }
 

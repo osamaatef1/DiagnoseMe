@@ -11,11 +11,11 @@ class SymptomController extends Controller
 {
     use Responser;
     public function __construct(){
-        $this->middleware('admin');
+        $this->middleware('admin')->only('store');
     }
 
     public function index(){
-        $symptoms = Symptom::select('id' , 'name')->get()->paginate(10);
+        $symptoms = Symptom::select('id' , 'name')->paginate(10);
         return $this->responseSuccess("Symptoms Returned !" , $symptoms);
     }
 

@@ -15,4 +15,8 @@ class Condition extends Model
     public function symptoms(){
         return $this->belongsToMany(Symptom::class , 'condition_symptoms');
     }
+
+    public function symptomsCount(){
+        return $this->hasMany(ConditionSymptoms::class)->count();
+    }
 }

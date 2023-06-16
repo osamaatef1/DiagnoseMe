@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConditionController;
 use App\Http\Controllers\ConditionsToSymptoms;
+use App\Http\Controllers\DiseasePredictController;
 use App\Http\Controllers\DoctorsController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ScheduleController;
@@ -39,11 +40,13 @@ Route::controller(DoctorsController::class)->prefix('doctor')->group(function ()
     Route::get('/', 'index');
     Route::get('/{id}', 'oneitem');
     Route::delete('/{id}', 'delete')->middleware('auth:api' , 'admin');
+    Route::post('AvailableDays','AvailableDays')->middleware('auth:doctors');
+
 });
 
 Route::get('mySchedules' , [DoctorsController::class , 'schedules'])->middleware('auth:doctors');
 Route::controller(AuthController::class)->prefix('doctor')->group(function () {
-    Route::post('login' , 'loginDoctors');
+    Route::post('login' , 'loginDoctor');
     Route::post('register','registerDoctor');
 });
 
@@ -78,4 +81,8 @@ Route::controller(ScheduleController::class)->prefix('schedule')->group(function
     Route::get('/' , 'index');
     Route::post('/','store')->middleware('auth:api', 'premium');
 
+});
+
+Route::controller(DiseasePredictController::class)->prefix('disease')->group(function (){
+   Route::post('predict' , 'predict');
 });
