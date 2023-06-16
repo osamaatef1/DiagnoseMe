@@ -80,7 +80,7 @@ class AuthController extends Controller
 
             $credentials = request(['email', 'password']);
             $token = \auth()->guard('api')->attempt($credentials);
-            return $this->responseSuccess('User Registerd', [$user,'token'=>$token]);
+            return $this->responseSuccess('User Registerd', ['user'=> $user,'token'=>$token]);
         }
         catch
             (\Exception $e){
@@ -113,7 +113,7 @@ class AuthController extends Controller
             }
 
             return $this->responseSuccess('Doctor Registered', [
-                DoctorResource::make($doctor),
+                'user' => DoctorResource::make($doctor),
                 'token'=>$token]);
         }
 

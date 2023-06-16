@@ -15,17 +15,18 @@ class DiseasePredictController extends Controller
         $scores = [];
         $conditions = Condition::all();
         foreach ($conditions as $condition){
-            $scores[$condition['id']] = [
+             $scores[$condition['id']] = [
               'condition' => $condition['overview'],
               'score' => 0
             ];
         }
+
         $symptoms = $request['symptoms'];
         foreach ($symptoms as $symptom){
             $symptomDiseases = ConditionSymptoms::where('symptom_id' , $symptom)->get();
             foreach ($symptomDiseases as $symptomDisease){
                 $condition = Condition::find($symptomDisease['condition_id']);
-                $symptomsCount = $condition->symptomsCount();
+                $symptomsCount = $condition->symptomsCount();  //Number of all symptoms of the disease TO number of symptoms the patient had chosen
                 $finalIncreasing = (1 / $symptomsCount) * 100;
                 $scores[$symptomDisease['condition_id']]['score'] += $finalIncreasing;
             }
