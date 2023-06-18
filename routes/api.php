@@ -43,7 +43,7 @@ Route::controller(DoctorsController::class)->prefix('doctor')->group(function ()
     Route::post('AvailableDays','AvailableDays')->middleware('auth:doctors');
 
 });
-
+Route::get('AvailableDays/{id}' , [DoctorsController::class , 'getAvailableDays']);
 Route::get('mySchedules' , [DoctorsController::class , 'schedules'])->middleware('auth:doctors');
 Route::controller(AuthController::class)->prefix('doctor')->group(function () {
     Route::post('login' , 'loginDoctor');
@@ -54,6 +54,7 @@ Route::controller(SymptomController::class)->middleware(['auth:api'])->prefix('s
     Route::get('/' , 'index');
     Route::post('/' , 'store');
 });
+
 Route::controller(ConditionController::class)->prefix('condition')->group(function (){
     Route::get('/','index');
     Route::get('/{id}','oneCondition');

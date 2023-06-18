@@ -106,4 +106,9 @@ class DoctorsController extends Controller
 
             }
     }
+
+    public function getAvailableDays($id){
+        $Doctor = Doctor::find($id);
+        return $this->responseSuccess('Returned',['Days ' => $Doctor->AvailableDays]);
+    }
 }

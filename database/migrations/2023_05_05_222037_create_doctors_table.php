@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('username');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('info');
+            $table->string('address');
             $table->text('phone_number');
             $table->tinyInteger('role')->default(2)->nullable();
             $table->string('ReservedDate')->nullable();
