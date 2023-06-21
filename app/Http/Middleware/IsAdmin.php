@@ -18,6 +18,6 @@ class IsAdmin
             return $next($request);
         }
 
-        return 'unauth';
+        return $this->responseFailed('You Are Not Allowed !'  , '');
     }
 }
