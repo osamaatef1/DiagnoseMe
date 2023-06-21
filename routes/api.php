@@ -87,3 +87,7 @@ Route::controller(ScheduleController::class)->prefix('schedule')->group(function
 Route::controller(DiseasePredictController::class)->prefix('disease')->group(function (){
    Route::post('predict' , 'predict');
 });
+Route::controller(\App\Http\Controllers\PremiumController::class)->prefix('Premium')->group(function (){
+   Route::post('/user/{id}' , 'makeUserPremium');
+   Route::post('/change' , 'makePremium');
+});
