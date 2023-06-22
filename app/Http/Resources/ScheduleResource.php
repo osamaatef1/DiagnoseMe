@@ -20,7 +20,7 @@ class ScheduleResource extends JsonResource
           ],
           'date' => [
               'date' => Carbon::make($this->date)->format('d-y'),
-              'monthName' => Carbon::make($this->date)->month,
+              'monthName' => Carbon::make($this->date)->format('m'),
           ],
           'time' => $this->time,
           'status' => $this->status
