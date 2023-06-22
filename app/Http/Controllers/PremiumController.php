@@ -35,7 +35,7 @@ class PremiumController extends Controller
         try {
             $user = auth('api')->user();
             $user->update(['premium'=>1]);
-          return  $this->responseSuccess('You Are Premium Now !' , $user->premium);
+          return  $this->responseSuccess('You Are Premium Now !' , ['Premium' => $user->premium]);
         }catch (\Exception $e){
             return $this->responseSuccess('Sorry! Something Went Wrong' , $e->getMessage());
         }
