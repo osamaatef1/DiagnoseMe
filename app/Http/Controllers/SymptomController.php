@@ -15,7 +15,7 @@ class SymptomController extends Controller
     }
 
     public function index(){
-        $symptoms = Symptom::select('id' , 'name');
+        $symptoms = Symptom::all();
         return $this->responseSuccess("Symptoms Returned !" , $symptoms);
     }
 
@@ -27,7 +27,7 @@ class SymptomController extends Controller
             ]);
             return $this->responseSuccess('Symptom Added' , $sym);
         }catch (\Exception $e){
-            return $this->responseFailed('Something Went Wrong !' , null);
+            return $this->responseFailed('Something Went Wrong !',null);
         }
     }
 }
