@@ -50,9 +50,9 @@ Route::controller(AuthController::class)->prefix('doctor')->group(function () {
     Route::post('register','registerDoctor');
 });
 
-Route::controller(SymptomController::class)->middleware(['auth:api'])->prefix('symptoms')->group(function (){
+Route::controller(SymptomController::class)->prefix('symptoms')->group(function (){
     Route::get('/' , 'index');
-    Route::post('/' , 'store');
+    Route::post('/' , 'store')->middleware(['auth:api']);
 });
 
 Route::controller(ConditionController::class)->prefix('condition')->group(function (){

@@ -15,7 +15,7 @@ class SymptomController extends Controller
     }
 
     public function index(){
-        $symptoms = Symptom::select('id' , 'name')->paginate(10);
+        $symptoms = Symptom::select('id' , 'name');
         return $this->responseSuccess("Symptoms Returned !" , $symptoms);
     }
 
